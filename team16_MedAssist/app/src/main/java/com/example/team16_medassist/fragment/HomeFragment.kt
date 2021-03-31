@@ -24,7 +24,6 @@ import com.example.team16_medassist.adaptor.RecentCasesRecyclerAdaptor
 import com.example.team16_medassist.model.MapMatricesModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
 import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
