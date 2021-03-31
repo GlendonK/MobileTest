@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#DCDCDC">
+
+            <TextView
+                android:id="@+id/textViewPatientCaseID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="0dp"
+                android:text="Patient case #5421"
+                android:textColor="#465253"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textViewPatientCaseTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="30dp"
+                android:paddingEnd="0dp"
+                android:text="08:05pm"
+                android:textColor="#465253"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewPatientCaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="50dp"
+                android:paddingEnd="0dp"
+                android:text="08/02/2021"
+                android:textColor="#465253"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewPatientCaseCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="70dp"
+                android:paddingEnd="0dp"
+                android:text="Condition: Small cut and bruises"
+                android:textColor="@color/blue"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            //start of ETA facility card view
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewETA"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:outlineAmbientShadowColor="@color/black"
+                app:cardBackgroundColor="#F1F1F1"
+                app:cardCornerRadius="5dp"
+                android:layout_marginLeft="330dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textViewETA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="ETA"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textViewETAString"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="8dp"
+                    android:text="00"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textViewETAMins"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="32dp"
+                    android:text="mins"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+            </androidx.cardview.widget.CardView>
+            //END of ETA CardView
+
+            <Button
+                android:id="@+id/buttonViewPatientCaseCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="55dp"
+                android:layout_marginLeft="320dp"
+                android:text="View"
+                android:textColor="@color/blue"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.cardview.widget.CardView>

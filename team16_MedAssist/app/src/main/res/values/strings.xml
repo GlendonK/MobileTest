@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">MedAssist</string>
+
+    // ======================== layout -> fragment_main ========================================= //
+    <string name="buttonView">View</string>
+    <string name="textViewStatus">Active</string>
+    <string name="textViewCaseID">CASE ID #</string>
+
+    <string name="textViewReportNum">3</string>
+    <string name="textViewReportDue">Reports Due</string>
+    <string name="textViewHistoryName">Case History</string>
+    <string name="textViewHistoryNum">10</string>
+
+    <string name="textViewHistory">Recent Activity</string>
+
+    <string name="imageViewStatus">status icon</string>
+    //icon description
+    <string name="imageViewReportIcon">report icon</string>
+    <string name="imageViewHistoryIcon">history icon</string>
+    // ======================== menu -> nav_drawer ============================================== //
+    <string name="nav_home">Dashboard</string>
+
+    // ======================== menu -> nav_bottom ============================================== //
+    <string name="btmNav_home">Home</string>
+    <string name="btmNav_chat">Chat</string>
+
+    // ======================== layout -> activity_main ========================================= //
+    <string name="open">True</string>
+    <string name="close">False</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="case_id">Case ID</string>
+    <string name="start_new_recording">Start new Recording</string>
+
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/blue"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:layout_marginBottom="-40dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/profile_1" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/imageViewProfile"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="The Nu Win"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+
+</RelativeLayout>

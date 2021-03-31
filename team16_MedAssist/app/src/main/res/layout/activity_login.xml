@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.LoginActivity">
+
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.example.team16_medassist.viewmodel.LoginViewModel" />
+    </data>
+    <!-- References to the data elements or expressions within the layout
+    // are written in the attribute properties using the @{} or @={} -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <Button
+            android:id="@+id/buttonForget"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="120dp"
+            android:text="Forget Password?"
+            android:textAllCaps="false"
+            android:textColor="#C4C4C4"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Login"
+            android:onClick="@{(v) -> loginViewModel.login(v)}"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#0057FE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:text="@={loginViewModel.password}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
+
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:ems="10"
+            android:text="@={loginViewModel.email}"
+            android:hint="Email or phone number"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#357AFE"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toolbar_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            layout="@layout/drawer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/incomingCaseTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Incoming Cases"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_wrapper"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SearchView
+        android:id="@+id/searchCasesView"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="17dp"
+        android:queryHint="search cases"
+        android:iconifiedByDefault="false"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/incomingCaseTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Spinner
+        android:id="@+id/sortBySpinner"
+        android:layout_width="100sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/searchCasesView"
+        app:layout_constraintTop_toBottomOf="@id/incomingCaseTextView"
+        />
+
+    <ScrollView
+        android:id="@+id/casesScrollView"
+        android:layout_width="380dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="30dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchCasesView"
+        android:background="#F1F1F1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

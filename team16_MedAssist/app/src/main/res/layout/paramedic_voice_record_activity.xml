@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D8D8D8"
+    tools:context=".activity.ParaVoiceActivity">
+
+    //start of top bar navigation (start copy)
+
+    //end of top bar navigation (copy end)
+
+    //start of blue widget to contain cards
+
+    // Why using AppBarLayout? the appbar gonna disappear when scroll? will scroll?
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        // Action Bar is implemented like this so when need apply changes to the bar
+        // just go layout/custom_toolbar.xml change
+
+
+
+        <LinearLayout
+            android:id="@+id/CenterLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#D8D8D8"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/caseDetailID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dp"
+                    android:text="@string/case_id"
+                    android:textSize="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/caseDetailNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="#0000"
+                    android:textSize="18dp"
+                    app:layout_constraintStart_toEndOf="@+id/caseDetailID"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/startRecButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/start_new_recording" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/text_box"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/symptomsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="This is the text view for displaying the symptoms of the patient from the speech to text"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/diagnosisLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/diagnosisText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="This is to display the prediction"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="SUBMIT"
+                app:layout_constraintTop_toBottomOf="@+id/diagnosisLayout" />
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonCam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:elevation="4dp"
+        app:backgroundTint="#357AFE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_baseline_camera_alt_30"
+        app:tint="@color/white" />
+
+    //end of blue widget to contain cards
+</androidx.constraintlayout.widget.ConstraintLayout>

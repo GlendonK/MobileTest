@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#357AFE">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_rounded_whitecorners"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/content_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/caseDetailID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="CASE #"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/viewPFTextViewCaseNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="0000"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/caseDetailID"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewName"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/content_header">
+
+                <TextView
+                    android:id="@+id/textViewPatientName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="10dp"
+                    android:text="Name"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/editPFTextViewName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:inputType="textPersonName"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewFacility"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardviewName">
+
+                <TextView
+                    android:id="@+id/textViewFacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="10dp"
+                    android:text="Facility/Site"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/editPFTextViewFacility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:inputType="textPersonName"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+            //end of facility card view
+
+            //start of incident time card view
+
+            <LinearLayout
+                android:id="@+id/cardViewSubCollection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintBottom_toTopOf="@+id/cardViewCondition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardviewFacility">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewIncidentTimeHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:id="@+id/textViewIncidentTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingStart="10dp"
+                        android:text="Incident Time"
+                        android:textColor="@color/blue"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/editPFTextViewIncidentTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:inputType="time"
+                        android:textSize="18dp" />
+                    //start of incident date card view
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewIncidentDateHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:id="@+id/textViewIncidentDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingStart="6dp"
+                        android:text="Incident Date"
+                        android:textColor="@color/blue"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/editPFTextViewIncidentDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="10dp"
+                        android:inputType="date"
+                        android:textSize="18dp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardViewGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp">
+
+                    <TextView
+                        android:id="@+id/textViewGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingStart="6dp"
+                        android:text="Gender"
+                        android:textColor="@color/blue"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/editPFTextViewGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="10dp"
+                        android:textSize="18dp" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            //end of incident time card view
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewCondition"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewSubCollection">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/textViewCondition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:paddingStart="10dp"
+                        android:text="Condition"
+                        android:textColor="@color/blue"
+                        android:textSize="18sp" />
+
+
+                    <ScrollView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/editPFTextViewCondition"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textMultiLine"
+                                android:text="Bone infracture..........jsljfslfjskl
+                                dfjdslfjdslkfjsldfjslfjslfsjdldfklsjflksjflksjflskjfslkjfdlsjfslfjs
+                                ldjfsdljfdlskjflksjflskdjflskjdflskjdflsdkjfsdlkjfslfslkfjlsjflskfjl
+                                jfdlksjflsjflskdjfsldkfjdsklfjsdljflsdkfjlskdjfdslkjfdslkjfsldkfjsdljdfsldk
+                                jfdlskjflskjflskjflsdjflksdjflsdjflsjfsl"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+
+                    </ScrollView>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <android.widget.Button
+                android:id="@+id/startDiagonsisButton"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/bg_rounded_bluecorners"
+                android:text="Start Diagonsis Predictor"
+                android:textColor="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardViewCondition" />
+
+            //start of remarks card view
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewRemarks"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startDiagonsisButton">
+
+                <ScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewRemarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="4dp"
+                            android:text="Remarks"
+                            android:textColor="@color/blue"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/editPFTextViewRemarks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:inputType="textMultiLine"
+                            android:text="Bone infracture..........jsljfslfjskldfjdslfjdslkfjsldfjslfjslfsjdldfklsjflksjflksjflskjfslkjfdlsjfslfjsldjfsdljfdlskjflksjflskdjflskjdflskjdflsdkjfsdlkjfslfslkfjlsjflskfjljfdlksjflsjflskdjfsldkfjdsklfjsdljflsdkfjlskdjfdslkjfdslkjfsldkfjsdljdfsldkjfdlskjflskjflskjflsdjflksdjflsdjflsjfsl"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+                </ScrollView>
+            </androidx.cardview.widget.CardView>
+            //end of remarks card view
+
+            <LinearLayout
+                android:id="@+id/buttonCollections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewRemarks">
+
+                <android.widget.Button
+                    android:id="@+id/addAttachmentButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_rounded_bluecorners"
+                    android:text="Add Attachment"
+                    android:textColor="@color/blue" />
+
+                <android.widget.Button
+                    android:id="@+id/viewRecordingButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="View Recording"
+                    android:textColor="@color/blue"
+                    android:background="@drawable/bg_rounded_bluecorners" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/closeIssueButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:text="Close Case"
+                android:textColor="@color/white"
+                app:backgroundTint="#f53649"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonCollections" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</ScrollView>
