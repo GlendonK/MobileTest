@@ -36,4 +36,5 @@ jobs:
           echo test, and deploy your project.
       # Build Android App
       - name: Ui Test
+        working-directory: ./team16_MedAssist
         run: ./gradlew test

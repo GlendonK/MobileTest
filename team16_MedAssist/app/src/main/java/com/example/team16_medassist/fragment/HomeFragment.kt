@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
     companion object {
         private val ARG_CAUGHT = "homeFragment_caught"
 
-        fun newInstance(inputArgs: Bundle?, context: Context): HomeFragment {
+        fun newInstance(inputArgs: Bundle?): HomeFragment {
             val args = inputArgs
             val fragment = HomeFragment()
             fragment.arguments = args
