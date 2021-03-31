@@ -46,6 +46,21 @@ class LoginActivityTest {
         runBlocking{ delay(5000) }
         onView(withText("CASE ID #")).check(matches(isDisplayed()))
 
+        /**
+         * go to the report page
+         */
+        onView(withId(R.id.buttonViewReport)).perform(click())
+        runBlocking{ delay(1000) }
+        onView(withId(R.id.reportFTextViewTitle)).check(matches(isDisplayed())).perform(pressBack())
+        runBlocking{ delay(1000) }
+
+        /**
+         * go to the case details page
+         */
+        onView(withId(R.id.buttonView)).perform(click())
+        runBlocking{ delay(1000) }
+
+
     }
 }
 
