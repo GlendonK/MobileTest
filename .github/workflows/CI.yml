@@ -34,6 +34,9 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+      # cd to correct dir
+      - name: cd to gradlew
+        run: cd team16_MedAssist
       # Build Android App
       - name: Ui Test
         run: ./gradlew test
