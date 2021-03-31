@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() , AuthListener{
         if(position.toString() == "paramedic"){
             val fragInfo = HomeFragment()
             fragInfo.setArguments(bundle)
-            loadFragment(HomeFragment.newInstance(bundle, this))
+            loadFragment(HomeFragment.newInstance(bundle))
         }
         if(position.toString() == "doctor"){
             val fragInfo = DoctorFragment()
