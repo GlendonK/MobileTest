@@ -34,6 +34,10 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+      # gradlew permision
+      - name: set gradlew permission  
+        working-directory: ./team16_MedAssist
+        run: chmod x+ gradlew
       # Build Android App
       - name: Ui Test
         working-directory: ./team16_MedAssist
