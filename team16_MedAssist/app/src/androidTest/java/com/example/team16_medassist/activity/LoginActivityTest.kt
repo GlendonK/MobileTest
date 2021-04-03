@@ -60,6 +60,13 @@ class LoginActivityTest {
         onView(withId(R.id.buttonView)).perform(click())
         runBlocking{ delay(1000) }
 
+        /**
+         * go to case history
+         */
+        onView(withId(R.id.buttonViewHistory)).perform(click())
+        runBlocking{ delay(1000) }
+
+        
 
     }
 }
