@@ -31,11 +31,17 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.team16_medassist.activity.MainActivity
+import com.example.team16_medassist.model.CaseDetails
 import com.google.android.gms.location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
 
@@ -65,6 +71,14 @@ class HomeFragment : Fragment() {
      */
     lateinit var _response: MapMatricesModel
 
+
+    /**
+     * Firebase
+     */
+    private var mFirebaseDatabase: DatabaseReference?=null
+    private var mFirebaseInstance: FirebaseDatabase?=null
+
+
     companion object {
         private val ARG_CAUGHT = "homeFragment_caught"
 
@@ -86,10 +100,43 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
+
         val homeView: View = inflater.inflate(R.layout.fragment_homepage, container, false)
         // declare recyclerView
         viewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
         val recentActivityRecycler = homeView.findViewById<RecyclerView>(R.id.caseRecyclerView)
+
+        mFirebaseInstance= FirebaseDatabase.getInstance()
+        mFirebaseDatabase=mFirebaseInstance!!.getReference("active_case_details")
+
+
+
+        /**
+         * get firebase data and set UI
+         *
+         */
+        var store: CaseDetails? = null
+        mFirebaseDatabase!!.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot){
+                if (dataSnapshot.hasChildren()){
+                    dataSnapshot.children.forEach {
+                        store = it!!.getValue(CaseDetails::class.java)
+                        Log.e(TAG,"${store!!.caseId}")
+                        homeView.findViewById<TextView>(R.id.textViewCaseID).text = store!!.caseId
+                    }
+
+                }
+            }
+            override fun onCancelled(error: DatabaseError){
+                //Failed to read value
+                Log.e(TAG,"Failed to read user",error.toException())
+            }
+        })
+
+
+
+
 
         viewModel.getCaseLiveData().observe(viewLifecycleOwner, Observer { cases ->
 
@@ -170,6 +217,13 @@ class HomeFragment : Fragment() {
             transaction.replace(R.id.contentFrame, ReportFragment())
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.commit()
+        }
+
+        homeView.findViewById<Button>(R.id.buttonView).setOnClickListener {
+            //val caseDetails = CaseDetails(caseId = "0810", date = "01/01/2021", diagnosis = "Stroke", symptoms = "nausea, dizzy, headache, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
+
+
+
         }
         return homeView
     }

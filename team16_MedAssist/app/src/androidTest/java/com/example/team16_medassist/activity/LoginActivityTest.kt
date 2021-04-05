@@ -51,7 +51,8 @@ class LoginActivityTest {
          */
         onView(withId(R.id.buttonViewReport)).perform(click())
         runBlocking{ delay(1000) }
-        onView(withId(R.id.reportFTextViewTitle)).check(matches(isDisplayed())).perform(pressBack())
+        onView(withId(R.id.reportFTextViewTitle)).check(matches(isDisplayed()))
+        onView(isRoot()).perform(pressBack())
         runBlocking{ delay(1000) }
 
         /**
@@ -71,8 +72,7 @@ class LoginActivityTest {
     }
 
     @Test
-    fun checkLoginDoctorPass() {
-
+    fun CheckLoginDoctorPass(){
         /**
          * find teh log in field and input correct email and pw.
          * click log in button.
@@ -80,14 +80,13 @@ class LoginActivityTest {
          * if "CASE ID #" is displayed it means log in successful
          * closeSoftKeyboard to prevent keyboard from blockin UI
          */
-
-        onView(withId(R.id.editTextUsername)).perform(typeText("nuwin@gmail.com"))
+        onView(withId(R.id.editTextUsername)).perform(typeText("doctor@gmail.com"))
         onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
-        onView(withId(R.id.editTextPassword)).perform(typeText("88888888"))
+        onView(withId(R.id.editTextPassword)).perform(typeText("00000000"))
         onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
         onView(withId(R.id.buttonLogin)).perform(click())
         runBlocking{ delay(5000) }
-
+        onView(withText("CASE ID #")).check(matches(isDisplayed()))
     }
 }
 

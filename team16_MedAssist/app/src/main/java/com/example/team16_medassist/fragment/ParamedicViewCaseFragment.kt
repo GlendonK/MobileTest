@@ -13,10 +13,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team16_medassist.R
 import com.example.team16_medassist.model.CaseModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ParamedicViewCaseFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var database: DatabaseReference
+
 
     companion object {
         private val ARG_CAUGHT = "viewPatientFragment_caught"
@@ -57,6 +62,8 @@ class ParamedicViewCaseFragment : Fragment() {
         paraViewCase.findViewById<TextView>(R.id.viewPFTextViewCondition).text = patientCondition
         paraViewCase.findViewById<TextView>(R.id.editPFTextViewGender).text = gender
         paraViewCase.findViewById<TextView>(R.id.viewPFTextViewRemarks).text = caseRemarks
+
+
 
         // close case
         paraViewCase.findViewById<Button>(R.id.closeIssueButton).setOnClickListener(){
