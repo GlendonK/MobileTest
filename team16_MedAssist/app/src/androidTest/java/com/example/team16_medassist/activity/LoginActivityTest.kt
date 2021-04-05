@@ -69,6 +69,26 @@ class LoginActivityTest {
         
 
     }
+
+    @Test
+    fun checkLoginDoctorPass() {
+
+        /**
+         * find teh log in field and input correct email and pw.
+         * click log in button.
+         * wait 5 sec to authenticate.
+         * if "CASE ID #" is displayed it means log in successful
+         * closeSoftKeyboard to prevent keyboard from blockin UI
+         */
+
+        onView(withId(R.id.editTextUsername)).perform(typeText("nuwin@gmail.com"))
+        onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextPassword)).perform(typeText("88888888"))
+        onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
+        onView(withId(R.id.buttonLogin)).perform(click())
+        runBlocking{ delay(5000) }
+
+    }
 }
 
 
