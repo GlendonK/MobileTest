@@ -107,16 +107,21 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
         val recentActivityRecycler = homeView.findViewById<RecyclerView>(R.id.caseRecyclerView)
 
-        mFirebaseInstance= FirebaseDatabase.getInstance()
-        mFirebaseDatabase=mFirebaseInstance!!.getReference("active_case_details")
 
+         val caseDetails = CaseDetails(caseId = "1810", date = "01/01/2021", diagnosis = "Heart Attack", symptoms = "nausea, dizzy, chest pain, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
+
+
+        var database = Firebase.database.reference.child("active_case_details").push()
+        database.setValue(caseDetails)
 
 
         /**
          * get firebase data and set UI
          *
          */
-        var store: CaseDetails? = null
+//        mFirebaseInstance= FirebaseDatabase.getInstance()
+//        mFirebaseDatabase=mFirebaseInstance!!.getReference("active_case_details")
+        var store: CaseDetails?
         mFirebaseDatabase!!.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot){
                 if (dataSnapshot.hasChildren()){
@@ -220,9 +225,17 @@ class HomeFragment : Fragment() {
         }
 
         homeView.findViewById<Button>(R.id.buttonView).setOnClickListener {
-            //val caseDetails = CaseDetails(caseId = "0810", date = "01/01/2021", diagnosis = "Stroke", symptoms = "nausea, dizzy, headache, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
+           // val caseDetails = CaseDetails(caseId = "1810", date = "01/01/2021", diagnosis = "Heart Attack", symptoms = "nausea, dizzy, chest pain, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
 
 
+//            var database = Firebase.database.reference.child("active_case_details").push()
+//            database.setValue(caseDetails)
+
+
+            val transaction = activity!!.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.contentFrame, ParamedicCaseDetailFragment())
+            transaction.disallowAddToBackStack()
+            transaction.commit()
 
         }
         return homeView

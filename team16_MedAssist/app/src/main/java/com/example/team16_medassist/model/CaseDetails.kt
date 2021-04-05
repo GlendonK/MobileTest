@@ -5,13 +5,13 @@ import kotlin.properties.Delegates
 class CaseDetails {
 
     var caseId: String? = null
-    private var  latitude by Delegates.notNull<Double>()
-    private var  longitude by Delegates.notNull<Double>()
-    private var  diagnosis: String? = null
-    private var  symptoms: String? = null
-    private var  time: String? = null
-    private var  date: String? = null
-    private var  gender: String? = null
+    var  latitude by Delegates.notNull<Double>()
+    var  longitude by Delegates.notNull<Double>()
+    var  diagnosis: String? = null
+    var  symptoms: String? = null
+    var  time: String? = null
+    var  date: String? = null
+    var  gender: String? = null
 
 
     constructor() {}

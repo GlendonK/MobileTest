@@ -302,11 +302,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:text="Bone infracture..........jsljfslfjskl
-                                dfjdslfjdslkfjsldfjslfjslfsjdldfklsjflksjflksjflskjfslkjfdlsjfslfjs
-                                ldjfsdljfdlskjflksjflskdjflskjdflskjdflsdkjfsdlkjfslfslkfjlsjflskfjl
-                                jfdlksjflsjflskdjfsldkfjdsklfjsdljflsdkfjlskdjfdslkjfdslkjfsldkfjsdljdfsldk
-                                jfdlskjflskjflskjflsdjflksdjflsdjflsjfsl"
+                                android:text=""
                                 android:textSize="18sp" />
 
                         </LinearLayout>
@@ -361,7 +357,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="4dp"
-                            android:text="Remarks"
+                            android:text=""
                             android:textColor="@color/blue"
                             android:textSize="18sp" />
 
@@ -371,7 +367,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:text="Bone infracture..........jsljfslfjskldfjdslfjdslkfjsldfjslfjslfsjdldfklsjflksjflksjflskjfslkjfdlsjfslfjsldjfsdljfdlskjflksjflskdjflskjdflskjdflsdkjfsdlkjfslfslkfjlsjflskfjljfdlksjflsjflskdjfsldkfjdsklfjsdljflsdkfjlskdjfdslkjfdslkjfsldkfjsdljdfsldkjfdlskjflskjflskjflsdjflksdjflsdjflsjfsl"
+                            android:text=""
                             android:textSize="18sp" />
 
                     </LinearLayout>
