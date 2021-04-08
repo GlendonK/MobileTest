@@ -13,9 +13,21 @@ class PredictDiagnosis(context: Context) {
 
     private val context = context
     private val TAG = "PredictDiagnosis"
+
+    /**
+     * the symptom keywords for the ML model to recognise and predict a diagnosis
+     */
     private val symptomsKeywords: String =
         "bleeding,chest,pain,dizziness,cold,pale,vomiting,nausea,abdominal,fever,shortness,breath,sweating,unconscious,fatigue,obese,cough,wheezing,numbness,confusion,headache,bruising,swelling,arm,leg,tenderness,sneezing,rash,itchy,blisters,skin,diarrhea,tightness,cramps,rapid,heart,seizures,slow,throat"
 
+    /**
+     * function to encode the keyword from string as binary form (1s and 0s)
+     * 1 represent the keyword is present, 0 represent the keyword is not present.
+     * returns a float as the model takes in as float.
+     * @param symptomsKeywords - the string of symptom keywords
+     * @param speechToText - the text results from the speech to text
+     * @return FloatArray
+     */
     private fun extractKeywordAsBinary(symptomsKeywords: String, speechToText: String): FloatArray {
         val symptomsKeywordsSplit: List<String> = symptomsKeywords.split(",")
         val speechToTextSplit: List<String> = speechToText.split(" ")
@@ -31,6 +43,9 @@ class PredictDiagnosis(context: Context) {
         return resArr
     }
 
+    /**
+     * open the tflite model.
+     */
     fun loadModelFile(): MappedByteBuffer? {
         val assetFileDescriptor = context.applicationContext.assets.openFd("diagnosis_model.tflite")
         val fileInputStream = FileInputStream(assetFileDescriptor.getFileDescriptor())
@@ -40,6 +55,11 @@ class PredictDiagnosis(context: Context) {
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffSet, declaredLength)
     }
 
+    /**
+     * classification of the diagnosis based on the encoded symptom keywords.
+     * @param speechToText
+     * @return FloatArray
+     */
     fun classify(speechToText: String): FloatArray {
         val interpreter = Interpreter(loadModelFile()!!)
         /*val inputs : Array<FloatArray> = arrayOf(floatArrayOf(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1f,
@@ -82,6 +102,13 @@ class PredictDiagnosis(context: Context) {
         return outputs[0]
     }
 
+    /**
+     * to perform the the classification to get the most probable diagnosis.
+     * the model will output the probabilities of all the 23 classes (diagnosis) as a float array.
+     * the index of the highest number/probability in the float array is the most probable diagnosis.
+     * @param speechToText - the text result from the speech to text
+     * @return - String after checking the diagnosis index
+     */
     fun getDiagnosis(speechToText: String): String? {
         val modelOutput = classify(speechToText)
         var outputArr: FloatArray = floatArrayOf()
@@ -101,6 +128,12 @@ class PredictDiagnosis(context: Context) {
 
         return checkDiagnosis(indexOfMostProbable)
     }
+
+    /**
+     * to check which diagnosis the index of the ML model float array output  belongs to.
+     * @param index - the index of the highest probability from getDiagnosis function.
+     * @return String diagnosis text representing the index.
+     */
 
     private fun checkDiagnosis(index: Int): String? {
         var diagnosis: String? = null

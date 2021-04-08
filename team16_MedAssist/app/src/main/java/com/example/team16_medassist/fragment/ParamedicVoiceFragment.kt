@@ -78,27 +78,41 @@ class ParamedicVoiceFragment : Fragment(){
              * check permission to use microphone. if no, prompt to allow permission
              */
             speechToText.checkAudioPermission()
-            // this is async
+            /**
+             * this is async. Start the speech to text.
+             */
             speechToText.startSpeechToText()
         }
         mSubmitButton.setOnClickListener {
 
             lifecycleScope.launch {
-                // delay to make sure the speech recognizer finish transcribing
+                /**
+                 * delay to make sure the speech recognizer finish transcribing
+                 */
                 delay(500)
+                // stop the speech to text.
                 speechToText.stopSpeechToText()
 
+                /**
+                 * The results from speech to text.
+                 * The full transcribed text.
+                 */
                 val symptoms = speechToText.getSpeechText()
 
                 Toast.makeText(ParaVoiceView.context, "$symptoms", Toast.LENGTH_SHORT).show()
                 Log.d(ARG_CAUGHT, "$symptoms")
 
-                // Initialise the PredictDiagnosis class @Params(Context)
-                // Classify and get a diagnosis
+                /**
+                 * Initialise the PredictDiagnosis class
+                 * Classify and get a diagnosis.
+                 * pass in the transcribed text to get a diagnosis.
+                 */
                 var res = predictDiagnosis.getDiagnosis(symptoms)
                 mDiagnosisText.text = res
 
-                // Clear speechText so that it does not keep appending
+                /**
+                 *  Clear speechText so that it does not keep appending
+                 */
                 speechToText.clearSpeechText()
             }
             Toast.makeText(ParaVoiceView.context, "STOPPING", Toast.LENGTH_SHORT).show()
