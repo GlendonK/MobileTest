@@ -20,8 +20,7 @@
 speech to automate the process of verbal reporting at the clinic
 
 * Diagnosis predictor 
-  - To predict the occurrences of disease on the basis of various symptoms for
-doctors offsite to monitor the condition of patients in real time
+  - Use machine learning neutral network model to predict the occurrences of disease on the basis of various symptoms.
 
 * GPS location tracker  
-  - Provide an estimated time for clinic to monitor the ambulances in real time
+  - Provide an estimated time for ambulance to reach clinic based on current device location.
