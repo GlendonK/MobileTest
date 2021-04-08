@@ -1,6 +1,5 @@
 package com.example.team16_medassist.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.team16_medassist.database.CaseDatabase
 import com.example.team16_medassist.model.CaseModel
 

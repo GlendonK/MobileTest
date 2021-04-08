@@ -1,7 +1,5 @@
 package com.example.team16_medassist.fragment
 
-import HistoryFragment
-import android.graphics.Color
 import android.os.Bundle
 import android.speech.SpeechRecognizer
 import android.util.Log
@@ -10,18 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.team16_medassist.R
 import com.example.team16_medassist.activity.PredictDiagnosis
 import com.example.team16_medassist.activity.SpeechToText
-import com.example.team16_medassist.adaptor.DoctorRecentCasesRecyclerAdaptor
-import com.example.team16_medassist.adaptor.RecentCasesRecyclerAdaptor
 import com.example.team16_medassist.viewmodel.LoginViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -16,7 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.team16_medassist.R
@@ -24,8 +23,6 @@ import com.example.team16_medassist.activity.MapAPI
 import com.example.team16_medassist.adaptor.RecentCasesRecyclerAdaptor
 import com.example.team16_medassist.model.MapMatricesModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
-import kotlinx.coroutines.async
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -40,11 +37,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import kotlinx.android.synthetic.main.fragment_homepage.*
 
-/*
-* TODO: USE WORK MANAGER TO CALL getLastLocation() EVERY 1 MIN
-* */
 
 class HomeFragment : Fragment(){
 
@@ -60,6 +53,7 @@ class HomeFragment : Fragment(){
      * `locationCallback` is the callback for location request
      * `fusedLocationClient` is for getting current location
      * `location` to store the location data
+     * TODO: !TURN ON LOCATION. Location of the device *must be on or Location service will not work.
      */
     private lateinit var locationCallback: LocationCallback
     lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -182,8 +176,9 @@ class HomeFragment : Fragment(){
     /**
      *  Function to do api call to google distance matrix api to get
      *  estimated time from one location(origin) to another(destination).
-     *  @params latitude: Double, longitude: Double
-     *  get the params from locationCallback
+     *  get the params from locationCallback.
+     *  @param latitude
+     *  @param longitude
      */
     private fun getTimeToMedicalCentre(latitude: Double, longitude: Double) {
         val units = "imperial" // units of measurement for the map data
@@ -299,6 +294,7 @@ class HomeFragment : Fragment(){
 
     /**
      * function to check if location permission is allowed
+     * @return boolean if permission is allowed
      */
     fun checkLocationPermission(): Boolean {
         val permission = context?.let {
@@ -359,7 +355,6 @@ class HomeFragment : Fragment(){
     /**
      * stop the location update request
      */
-
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
         Log.d(TAG, "stopLocationUpdates")
@@ -377,7 +372,6 @@ class HomeFragment : Fragment(){
     /**
      * onPause of the activity stop the location request
      */
-
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()

@@ -1,14 +1,11 @@
 package com.example.team16_medassist.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.example.team16_medassist.activity.AuthListener
 import com.example.team16_medassist.model.CaseModel
 import com.example.team16_medassist.repository.CaseRepository
 import com.example.team16_medassist.repository.UserRepository
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
