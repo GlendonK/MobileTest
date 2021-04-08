@@ -13,6 +13,8 @@ import com.example.team16_medassist.R
 import com.example.team16_medassist.adaptor.ListCasesRecyclerAdaptor
 import com.example.team16_medassist.adaptor.OnItemClickListener
 import com.example.team16_medassist.fragment.HomeFragment
+import com.example.team16_medassist.fragment.ParamedicViewCaseFragment
+import com.example.team16_medassist.fragment.ParamedicViewMainFragment
 import com.example.team16_medassist.fragment.ReportFragment
 import com.example.team16_medassist.model.CaseModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
@@ -63,7 +65,19 @@ class HistoryFragment : Fragment() , OnItemClickListener {
     override fun onItemClicked(caseModel: CaseModel) {
         //TODO obtained the id here : can get all the fields in the recycler widget
         Log.d("tag",caseModel.getCaseId().toString())
-        // data here does not neeed to be live data; do notneed to observe UI changes
+        val bundle = Bundle()
+        bundle.putString("caseID", caseModel.getCaseId().toString())
+        bundle.putString("patientName", caseModel.getPatientName().toString())
+        bundle.putString("patientGender", caseModel.getGender().toString())
+        bundle.putString("address", caseModel.getCaseAddress().toString())
+        bundle.putString("incidentTime", caseModel.getCaseTime().toString())
+        bundle.putString("incidentDate", caseModel.getCaseDate().toString())
+        bundle.putString("caseRemarks", caseModel.getCaseRemarks().toString())
+        bundle.putString("caseDescription", caseModel.getCaseDescription().toString())
+        val transaction = activity!!.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.contentFrame, ParamedicViewMainFragment.newInstance(bundle))
+        transaction.addToBackStack(null)
+        transaction.commit()
 
     }
 

@@ -89,10 +89,10 @@ class ReportFragment: Fragment(), OnItemClickListener {
         bundle.putString("incidentTime", caseModel.getCaseTime().toString())
         bundle.putString("incidentDate", caseModel.getCaseDate().toString())
         bundle.putString("caseRemarks", caseModel.getCaseRemarks().toString())
-        bundle.putString("patientCondition", caseModel.getCaseDescription().toString())
+        bundle.putString("caseDescription", caseModel.getCaseDescription().toString())
         val transaction = activity!!.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.contentFrame, ParamedicViewCaseFragment.newInstance(bundle))
-        transaction.disallowAddToBackStack()
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 

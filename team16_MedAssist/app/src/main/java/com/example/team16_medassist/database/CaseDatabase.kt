@@ -60,7 +60,12 @@ class CaseDatabase {
                 for (i in tempArr.indices) {
                     if (tempArr[i].getCaseId().toString() == caseModel!!.getCaseId().toString()) {
                         val childPath = (i + 1).toString()
+                        childUpdates.put("patientName",caseModel.getPatientName().toString())
                         childUpdates.put("caseAddress",caseModel.getCaseAddress().toString())
+                        childUpdates.put("caseDescription",caseModel.getCaseDescription().toString())
+                        childUpdates.put("caseRemarks",caseModel.getCaseRemarks().toString())
+                        childUpdates.put("incidentDate",caseModel.getCaseDate().toString())
+                        childUpdates.put("incidentTime",caseModel.getCaseTime().toString())
                         childUpdates.put("caseStatus",caseModel.getCaseStatus().toString())
                         query.child(childPath).updateChildren(childUpdates)
                         break

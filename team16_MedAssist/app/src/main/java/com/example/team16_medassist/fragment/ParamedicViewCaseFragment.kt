@@ -13,15 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.team16_medassist.R
 import com.example.team16_medassist.model.CaseModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 class ParamedicViewCaseFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
-    private lateinit var database: DatabaseReference
-
 
     companion object {
         private val ARG_CAUGHT = "viewPatientFragment_caught"
@@ -51,7 +46,7 @@ class ParamedicViewCaseFragment : Fragment() {
         val gender = bundle!!.getString("patientGender")
         val caseDate = bundle!!.getString("incidentDate")
         val caseTime = bundle!!.getString("incidentTime")
-        val patientCondition = bundle!!.getString("patientCondition")
+        val patientCondition = bundle!!.getString("caseDescription")
         val caseRemarks = bundle!!.getString("caseRemarks")
 
         paraViewCase.findViewById<TextView>(R.id.viewPFTextViewCaseNumber).text = caseId
@@ -62,8 +57,6 @@ class ParamedicViewCaseFragment : Fragment() {
         paraViewCase.findViewById<TextView>(R.id.viewPFTextViewCondition).text = patientCondition
         paraViewCase.findViewById<TextView>(R.id.editPFTextViewGender).text = gender
         paraViewCase.findViewById<TextView>(R.id.viewPFTextViewRemarks).text = caseRemarks
-
-
 
         // close case
         paraViewCase.findViewById<Button>(R.id.closeIssueButton).setOnClickListener(){
@@ -76,7 +69,7 @@ class ParamedicViewCaseFragment : Fragment() {
         paraViewCase.findViewById<Button>(R.id.startDiagonsisButton).setOnClickListener(){
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.contentFrame, ParamedicVoiceFragment())
-            transaction.disallowAddToBackStack()
+            transaction.addToBackStack(null)
             transaction.commit()
         }
 
@@ -101,6 +94,7 @@ class ParamedicViewCaseFragment : Fragment() {
     private fun editCase(bundle: Bundle){
         val transaction = activity!!.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.contentFrame, ParamedicEditCaseFragment.newInstance(bundle))
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 }

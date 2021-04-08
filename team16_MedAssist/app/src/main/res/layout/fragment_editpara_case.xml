@@ -165,7 +165,7 @@
                         android:paddingStart="10dp"
                         android:text="Incident Time"
                         android:textColor="@color/blue"
-                        android:textSize="18dp" />
+                        android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/editPFTextViewIncidentTime"
@@ -198,7 +198,7 @@
                         android:paddingStart="6dp"
                         android:text="Incident Date"
                         android:textColor="@color/blue"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
                     <EditText
                         android:id="@+id/editPFTextViewIncidentDate"
@@ -230,10 +230,10 @@
                         android:paddingStart="6dp"
                         android:text="Gender"
                         android:textColor="@color/blue"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
-                    <TextView
-                        android:id="@+id/editPFTextViewGender"
+                    <Spinner
+                        android:id="@+id/spinnerGender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
@@ -309,17 +309,43 @@
 
             </androidx.cardview.widget.CardView>
 
-            <android.widget.Button
-                android:id="@+id/startDiagonsisButton"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardviewDiagnosis"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_rounded_bluecorners"
-                android:text="Start Diagonsis Predictor"
-                android:textColor="@color/blue"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardViewCondition" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewCondition">
+
+                <TextView
+                    android:id="@+id/textViewDiagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="10dp"
+                    android:text="Possible Dianosis"
+                    android:textColor="@color/blue"
+                    android:textSize="18dp" />
+
+                <EditText
+                    android:id="@+id/editPFTextViewDiagnosis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:inputType="textPersonName"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+
 
             //start of remarks card view
 
@@ -334,7 +360,7 @@
                 app:cardBackgroundColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/startDiagonsisButton">
+                app:layout_constraintTop_toBottomOf="@+id/cardviewDiagnosis">
 
                 <ScrollView
                     android:layout_width="wrap_content"
@@ -353,7 +379,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="4dp"
-                            android:text="Remarks"
+                            android:text="Notes"
                             android:textColor="@color/blue"
                             android:textSize="18sp" />
 
@@ -382,39 +408,23 @@
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewRemarks">
+                app:layout_constraintTop_toBottomOf="@+id/cardViewRemarks"
+                android:orientation="horizontal">
 
-                <android.widget.Button
-                    android:id="@+id/addAttachmentButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_rounded_bluecorners"
-                    android:text="Add Attachment"
-                    android:textColor="@color/blue" />
 
-                <android.widget.Button
-                    android:id="@+id/viewRecordingButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="View Recording"
-                    android:textColor="@color/blue"
-                    android:background="@drawable/bg_rounded_bluecorners" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/closeIssueButton"
+                android:id="@+id/updateCaseButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Close Case"
+                android:text="Update"
                 android:textColor="@color/white"
-                app:backgroundTint="#f53649"
+                app:backgroundTint="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonCollections" />

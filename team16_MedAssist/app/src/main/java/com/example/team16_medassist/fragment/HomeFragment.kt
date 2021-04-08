@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.team16_medassist.R
@@ -23,7 +24,10 @@ import com.example.team16_medassist.activity.MapAPI
 import com.example.team16_medassist.adaptor.RecentCasesRecyclerAdaptor
 import com.example.team16_medassist.model.MapMatricesModel
 import com.example.team16_medassist.viewmodel.LoginViewModel
+import kotlinx.coroutines.async
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
@@ -31,35 +35,31 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.team16_medassist.activity.MainActivity
-import com.example.team16_medassist.model.CaseDetails
 import com.google.android.gms.location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.fragment_homepage.*
 
-class HomeFragment : Fragment() {
+/*
+* TODO: USE WORK MANAGER TO CALL getLastLocation() EVERY 1 MIN
+* */
+
+class HomeFragment : Fragment(){
 
     val TAG = "HomeFragment"
-
-    private lateinit var viewModel: LoginViewModel
-
+    private lateinit var viewModel : LoginViewModel
     lateinit var ETA: TextView
 
     val REQUEST_PERMISSIONS_REQUEST_CODE = 1234
+
 
     /**
      * Location services variables
      * `locationCallback` is the callback for location request
      * `fusedLocationClient` is for getting current location
      * `location` to store the location data
-     *
-     * 
      */
     private lateinit var locationCallback: LocationCallback
     lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -71,18 +71,10 @@ class HomeFragment : Fragment() {
      */
     lateinit var _response: MapMatricesModel
 
-
-    /**
-     * Firebase
-     */
-    private var mFirebaseDatabase: DatabaseReference?=null
-    private var mFirebaseInstance: FirebaseDatabase?=null
-
-
     companion object {
         private val ARG_CAUGHT = "homeFragment_caught"
 
-        fun newInstance(inputArgs: Bundle?): HomeFragment {
+        fun newInstance(inputArgs: Bundle?, context: Context): HomeFragment {
             val args = inputArgs
             val fragment = HomeFragment()
             fragment.arguments = args
@@ -95,53 +87,14 @@ class HomeFragment : Fragment() {
     @NonNull
     @Override
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?): View? {
 
-
-
-        val homeView: View = inflater.inflate(R.layout.fragment_homepage, container, false)
+        val homeView : View = inflater.inflate(R.layout.fragment_homepage,container,false)
         // declare recyclerView
         viewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
         val recentActivityRecycler = homeView.findViewById<RecyclerView>(R.id.caseRecyclerView)
-
-
-         val caseDetails = CaseDetails(caseId = "1810", date = "01/01/2021", diagnosis = "Heart Attack", symptoms = "nausea, dizzy, chest pain, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
-
-
-        var database = Firebase.database.reference.child("active_case_details").push()
-        database.setValue(caseDetails)
-
-
-        /**
-         * get firebase data and set UI
-         *
-         */
-//        mFirebaseInstance= FirebaseDatabase.getInstance()
-//        mFirebaseDatabase=mFirebaseInstance!!.getReference("active_case_details")
-        var store: CaseDetails?
-        mFirebaseDatabase!!.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot){
-                if (dataSnapshot.hasChildren()){
-                    dataSnapshot.children.forEach {
-                        store = it!!.getValue(CaseDetails::class.java)
-                        Log.e(TAG,"${store!!.caseId}")
-                        homeView.findViewById<TextView>(R.id.textViewCaseID).text = store!!.caseId
-                    }
-
-                }
-            }
-            override fun onCancelled(error: DatabaseError){
-                //Failed to read value
-                Log.e(TAG,"Failed to read user",error.toException())
-            }
-        })
-
-
-
-
 
         viewModel.getCaseLiveData().observe(viewLifecycleOwner, Observer { cases ->
 
@@ -149,13 +102,12 @@ class HomeFragment : Fragment() {
             val getCaseCount = viewModel.getCaseReportCount().value.toString()
             homeView.findViewById<TextView>(R.id.textViewHistoryNum).text = getCaseCount
             var numPendingReports = 0
-            for (i in cases.indices) {
-                if (cases[i].getCaseStatus().toString() == "Pending") {
-                    numPendingReports += 1
+            for (i in cases.indices){
+                if (cases[i].getCaseStatus().toString()=="Pending"){
+                    numPendingReports+= 1
                 }
             }
-            homeView.findViewById<TextView>(R.id.textViewReportNum).text =
-                numPendingReports.toString()
+            homeView.findViewById<TextView>(R.id.textViewReportNum).text = numPendingReports.toString()
             // update the latest case assigned
             val caseId = viewModel.getCases().value!!.getCaseId()
             val caseStatus = viewModel.getCases().value!!.getCaseStatus()
@@ -188,18 +140,15 @@ class HomeFragment : Fragment() {
 
             val drawable = homeView.findViewById<ImageView>(R.id.imageViewStatus)
             // logic for the changing of status
-            if (caseStatus.toString() == "Pending") {
-                homeView.findViewById<TextView>(R.id.textViewStatus)
-                    .setTextColor(Color.parseColor("#FFA000"))
-                drawable.setColorFilter(ContextCompat.getColor(homeView.context, R.color.orange))
-            } else if (caseStatus.toString() == "Closed") {
-                homeView.findViewById<TextView>(R.id.textViewStatus)
-                    .setTextColor(Color.parseColor("#FF1700"))
-                drawable.setColorFilter(ContextCompat.getColor(homeView.context, R.color.red))
+            if (caseStatus.toString()=="Pending"){
+                homeView.findViewById<TextView>(R.id.textViewStatus).setTextColor(Color.parseColor("#FFA000"))
+                drawable.setColorFilter(ContextCompat.getColor(homeView.context,R.color.orange))
+            } else if (caseStatus.toString()=="Closed"){
+                homeView.findViewById<TextView>(R.id.textViewStatus).setTextColor(Color.parseColor("#FF1700"))
+                drawable.setColorFilter(ContextCompat.getColor(homeView.context,R.color.red))
             } else {
-                homeView.findViewById<TextView>(R.id.textViewStatus)
-                    .setTextColor(Color.parseColor("#4BCC89"))
-                drawable.setColorFilter(ContextCompat.getColor(homeView.context, R.color.green))
+                homeView.findViewById<TextView>(R.id.textViewStatus).setTextColor(Color.parseColor("#4BCC89"))
+                drawable.setColorFilter(ContextCompat.getColor(homeView.context,R.color.green))
             }
 
             // update the recyclerview
@@ -209,36 +158,25 @@ class HomeFragment : Fragment() {
             recyclerViewAdapter.notifyDataSetChanged()
         })
 
+
         // buttonViewHistory onClick logic
-        homeView.findViewById<Button>(R.id.buttonViewHistory).setOnClickListener() {
+        homeView.findViewById<Button>(R.id.buttonViewHistory).setOnClickListener(){
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.contentFrame, HistoryFragment())
             transaction.disallowAddToBackStack()
             transaction.commit()
         }
 
-        homeView.findViewById<Button>(R.id.buttonViewReport).setOnClickListener() {
+
+        homeView.findViewById<Button>(R.id.buttonViewReport).setOnClickListener(){
             val transaction = activity!!.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.contentFrame, ReportFragment())
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             transaction.commit()
         }
-
-        homeView.findViewById<Button>(R.id.buttonView).setOnClickListener {
-           // val caseDetails = CaseDetails(caseId = "1810", date = "01/01/2021", diagnosis = "Heart Attack", symptoms = "nausea, dizzy, chest pain, unconscious", gender = "M", latitude = 1.376505708845375, longitude = 1.94913061931985, time = "1245" )
-
-
-//            var database = Firebase.database.reference.child("active_case_details").push()
-//            database.setValue(caseDetails)
-
-
-            val transaction = activity!!.supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.contentFrame, ParamedicCaseDetailFragment())
-            transaction.disallowAddToBackStack()
-            transaction.commit()
-
-        }
         return homeView
+
+
     }
 
     /**
@@ -250,7 +188,7 @@ class HomeFragment : Fragment() {
     private fun getTimeToMedicalCentre(latitude: Double, longitude: Double) {
         val units = "imperial" // units of measurement for the map data
         val key =
-            "AIzaSyA9G3NuKvhxjDwWAtIohG1UUhFGp0nIQKw"// Only 300 request. Free account, if suddenly error... probably no more request
+                "AIzaSyA9G3NuKvhxjDwWAtIohG1UUhFGp0nIQKw"// Only 300 request. Free account, if suddenly error... probably no more request
 
         //Toast.makeText(applicationContext, "BEFORE", Toast.LENGTH_SHORT).show()
         //val origins = "${location!!.latitude},${location!!.longitude}"
@@ -265,45 +203,45 @@ class HomeFragment : Fragment() {
          */
         // TODO REPLACE WITH THE REAL DESTINATION
         val destinations =
-            "1.3342207508811255,103.89363338370808" // latitude , longitude of the destination
+                "1.3342207508811255,103.89363338370808" // latitude , longitude of the destination
 
         /**
          * Calls the interface which contains the api request
          */
         // TODO: PUT THIS INTO REPOSITORY, REPO WILL CALL THE API AND PASS UP TEH VIEW MODEL.
         MapAPI.retrofitService.getMapMatrices(units, origins, destinations, key).enqueue(
-            object : Callback<MapMatricesModel> {
-                override fun onResponse(
-                    call: Call<MapMatricesModel>?,
-                    response: Response<MapMatricesModel>?
-                ) {
-                    if (response != null) {
-                        /**
-                         * get response and parse the json response.
-                         * Update UI to show the time.
-                         */
-                        _response = response.body()
-                        //Toast.makeText(applicationContext, "OK", Toast.LENGTH_SHORT).show()
+                object : Callback<MapMatricesModel> {
+                    override fun onResponse(
+                            call: Call<MapMatricesModel>?,
+                            response: Response<MapMatricesModel>?
+                    ) {
+                        if (response != null) {
+                            /**
+                             * get response and parse the json response.
+                             * Update UI to show the time.
+                             */
+                            _response = response.body()
+                            //Toast.makeText(applicationContext, "OK", Toast.LENGTH_SHORT).show()
 
-                        /**
-                         * Paramedic activity will push the ETA time to database and the doctor
-                         * activity will get from database.
-                         * TODO push `_response.rows[0].elements[0].duration.text` into DB
-                         */
-                        ETA.text = _response.rows[0].elements[0].duration.text // Get just the time
-                        Toast.makeText(context, "ETA Updated.", Toast.LENGTH_SHORT).show()
+                            /**
+                             * Paramedic activity will push the ETA time to database and the doctor
+                             * activity will get from database.
+                             * TODO push `_response.rows[0].elements[0].duration.text` into DB
+                             */
+                            ETA.text = _response.rows[0].elements[0].duration.text // Get just the time
+                            Toast.makeText(context, "ETA Updated.", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                /**
-                 * if api call fail, update UI with the error message.
-                 */
-                override fun onFailure(call: Call<MapMatricesModel>?, t: Throwable?) {
-                    ETA.text = t.toString()
-                    //Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+                    /**
+                     * if api call fail, update UI with the error message.
+                     */
+                    override fun onFailure(call: Call<MapMatricesModel>?, t: Throwable?) {
+                        ETA.text = t.toString()
+                        //Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
 
-                }
-            })
+                    }
+                })
     }
 
     /**
@@ -316,21 +254,21 @@ class HomeFragment : Fragment() {
     private fun getCurrentLocation() {
 
         if (context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED && context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED && context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                context as Activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_PERMISSIONS_REQUEST_CODE
+                    context as Activity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSIONS_REQUEST_CODE
             )
             return
         }
@@ -341,21 +279,21 @@ class HomeFragment : Fragment() {
          *
          */
         fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)!!
-            .addOnCompleteListener(MainActivity()) { task ->
-                if (task.result != null) {
+                .addOnCompleteListener(MainActivity()) { task ->
+                    if (task.result != null) {
 
 
-                    location = task.result
-                    Log.d(
-                        TAG,
-                        "latitude: ${location!!.latitude}, longitude: ${location!!.longitude}"
-                    )
-                    //getTimeToMedicalCentre()
-                    //mGpsText!!.text = "LAT: " + (location)!!.latitude.toString() + " LONG: " +  (location)!!.longitude.toString()
-                } else {
-                    Toast.makeText(context, "Location Service Error", Toast.LENGTH_SHORT).show()
+                        location = task.result
+                        Log.d(
+                                TAG,
+                                "latitude: ${location!!.latitude}, longitude: ${location!!.longitude}"
+                        )
+                        //getTimeToMedicalCentre()
+                        //mGpsText!!.text = "LAT: " + (location)!!.latitude.toString() + " LONG: " +  (location)!!.longitude.toString()
+                    } else {
+                        Toast.makeText(context, "Location Service Error", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
         return
     }
 
@@ -365,8 +303,8 @@ class HomeFragment : Fragment() {
     fun checkLocationPermission(): Boolean {
         val permission = context?.let {
             ContextCompat.checkSelfPermission(
-                it,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                    it,
+                    Manifest.permission.ACCESS_FINE_LOCATION
             )
         }
         return permission == PackageManager.PERMISSION_GRANTED
@@ -380,21 +318,21 @@ class HomeFragment : Fragment() {
          * checks permissions, if no permissions prompt user to allow
          */
         if (context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED && context?.let {
-                ActivityCompat.checkSelfPermission(
-                    it,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            } != PackageManager.PERMISSION_GRANTED
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED && context?.let {
+                    ActivityCompat.checkSelfPermission(
+                            it,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                } != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
-                context as Activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_PERMISSIONS_REQUEST_CODE
+                    context as Activity,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSIONS_REQUEST_CODE
             )
             return
         }
@@ -412,9 +350,9 @@ class HomeFragment : Fragment() {
         }
 
         fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
         )
     }
 
@@ -447,8 +385,3 @@ class HomeFragment : Fragment() {
     }
 
 }
-
-
-
-
-

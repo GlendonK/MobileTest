@@ -9,17 +9,6 @@
             android:title="Home" />
 
         <item
-            android:id="@+id/sideNav_profile"
-            android:icon="@drawable/ic_outline_person_24"
-            android:title="Profile" />
-
-
-        <item
-            android:id="@+id/sideNav_recentActivity"
-            android:icon="@drawable/ic_baseline_recent_activity_24"
-            android:title="Recent Activities" />
-
-        <item
             android:id="@+id/sideNav_reports"
             android:icon="@drawable/ic_outline_assessment_24"
             android:title="Reports" />

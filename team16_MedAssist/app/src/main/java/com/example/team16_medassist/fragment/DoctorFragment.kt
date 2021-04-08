@@ -56,7 +56,6 @@ class DoctorFragment : Fragment(){
         val doctorRecyclerView = doctorView.findViewById<RecyclerView>(R.id.doctorRecyclerView)
 
         viewModel.getCaseLiveData().observe(viewLifecycleOwner, Observer { cases ->
-
             // update the recyclerview
             val recyclerViewAdapter = DoctorRecentCasesRecyclerAdaptor(cases, doctorView.context)
             doctorRecyclerView.layoutManager = LinearLayoutManager(activity)

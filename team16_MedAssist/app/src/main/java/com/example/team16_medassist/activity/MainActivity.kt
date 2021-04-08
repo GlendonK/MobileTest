@@ -1,8 +1,7 @@
 package com.example.team16_medassist.activity
 
 import HistoryFragment
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.example.team16_medassist.R
 import com.example.team16_medassist.database.FirebaseApp
@@ -29,10 +29,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 
-
-class MainActivity : AppCompatActivity() , AuthListener{
+class MainActivity : AppCompatActivity() , AuthListener {
     private val ARG_CAUGHT = "Main_caught"
     // view binding to access view elements
+
     private lateinit var binding: ActivityMainBinding
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -64,8 +64,6 @@ class MainActivity : AppCompatActivity() , AuthListener{
         sideNavigationView.setNavigationItemSelectedListener{
             when(it.itemId){
                 R.id.sideNav_home -> nav_home()
-                R.id.sideNav_profile -> Toast.makeText(applicationContext,"profile page",Toast.LENGTH_SHORT).show()
-                R.id.sideNav_recentActivity -> Toast.makeText(applicationContext,"recentActivity page",Toast.LENGTH_SHORT).show()
                 R.id.sideNav_reports -> nav_reports()
                 R.id.sideNav_history -> nav_history()
                 R.id.sideNav_signout -> logout()
@@ -106,7 +104,7 @@ class MainActivity : AppCompatActivity() , AuthListener{
         if(position.toString() == "paramedic"){
             val fragInfo = HomeFragment()
             fragInfo.setArguments(bundle)
-            loadFragment(HomeFragment.newInstance(bundle))
+            loadFragment(HomeFragment.newInstance(bundle, this))
         }
         if(position.toString() == "doctor"){
             val fragInfo = DoctorFragment()
@@ -114,6 +112,17 @@ class MainActivity : AppCompatActivity() , AuthListener{
             loadFragment(DoctorFragment.newInstance(bundle))
         }
 
+    }
+
+    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val message = intent.extras?.getString("message")
+            val builder = AlertDialog.Builder(this@MainActivity)
+            builder.setTitle("Bio")
+//            builder.setMessage(userBio)
+            Log.d("hello",message.toString())
+
+        }
     }
 
     private fun logout(){
@@ -151,8 +160,13 @@ class MainActivity : AppCompatActivity() , AuthListener{
     private fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.contentFrame,fragment,"dashboard_fragment")
-        transaction.addToBackStack(null)
+        transaction.disallowAddToBackStack()
         transaction.commit()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, IntentFilter("MyData"))
     }
 
     override fun onStarted() {
@@ -166,5 +180,10 @@ class MainActivity : AppCompatActivity() , AuthListener{
     override fun onFailure(message: String) {
         TODO("Not yet implemented")
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver)
+//    }
 
 }

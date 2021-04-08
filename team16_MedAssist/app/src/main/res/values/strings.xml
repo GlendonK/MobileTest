@@ -32,4 +32,13 @@
     <string name="case_id">Case ID</string>
     <string name="start_new_recording">Start new Recording</string>
 
+
+    <string name="selected_item"></string>
+    <string name="handle_notification_now" />
+
+    <string-array name="Gender">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+
 </resources>

@@ -36,7 +36,7 @@ class LoginActivityTest {
          * click log in button.
          * wait 5 sec to authenticate.
          * if "CASE ID #" is displayed it means log in successful
-         * closeSoftKeyboard to prevent keyboard from blockin UI
+         * closeSoftKeyboard to prevent keyboard from blocking UI
          */
         onView(withId(R.id.editTextUsername)).perform(typeText("nuwin@gmail.com"))
         onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
@@ -50,25 +50,85 @@ class LoginActivityTest {
          * go to the report page
          */
         onView(withId(R.id.buttonViewReport)).perform(click())
-        runBlocking{ delay(1000) }
+        runBlocking{ delay(500) }
         onView(withId(R.id.reportFTextViewTitle)).check(matches(isDisplayed()))
-        onView(isRoot()).perform(pressBack())
-        runBlocking{ delay(1000) }
+        runBlocking{ delay(500) }
+        /**
+         * click on the case item in the list
+         */
+        onView(withId(R.id.imageButtonHistory)).perform(click())
+        runBlocking{ delay(500) }
+        /**
+         * check edit case
+         */
+        onView((withId(R.id.editCase))).perform(click())
+        runBlocking{ delay(500) }
 
         /**
-         * go to the case details page
+         * change name
          */
-        onView(withId(R.id.buttonView)).perform(click())
-        runBlocking{ delay(1000) }
+        onView(withId(R.id.editPFTextViewName)).perform(clearText()).perform(typeText("IU"))
+        runBlocking{ delay(500) }
+        onView(isRoot()).perform(closeSoftKeyboard());
+        runBlocking{ delay(500) }
+        /**
+         * scroll down to the update button and click it
+         */
+        onView(withId(R.id.updateCaseButton)).perform(scrollTo(), click())
+        runBlocking{ delay(500) }
+
+        /**
+         * check if the text view is edited
+         */
+        onView(withId(R.id.editPFTextViewName)).check(matches(withText("IU")))
+
+        /**
+         * click diagnosis button
+         */
+        onView(withId(R.id.startDiagonsisButton)).perform(click())
+        runBlocking{ delay(500) }
+        /**
+         * click the to start voice recognition
+         */
+        onView((withId(R.id.voicePFImageButton))).perform(click())
+        runBlocking{ delay(500) }
+        /**
+         * stop voice recognition to get diagnosis
+         */
+        onView(withId(R.id.startDiagonsisButton)).perform(click())
+        runBlocking{ delay(500) }
+        onView(withId(R.id.textViewPatientCaseDiagnosisDetails)).check(matches(withText("PNEUMOTHORAX")))
+
+
+
+
+
+        
+
+    }
+
+    @Test
+    fun checkCaseHistory() {
+
+        /**
+         * find teh log in field and input correct email and pw.
+         * click log in button.
+         * wait 5 sec to authenticate.
+         * if "CASE ID #" is displayed it means log in successful
+         * closeSoftKeyboard to prevent keyboard from blocking UI
+         */
+        onView(withId(R.id.editTextUsername)).perform(typeText("nuwin@gmail.com"))
+        onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
+        onView(withId(R.id.editTextPassword)).perform(typeText("88888888"))
+        onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
+        onView(withId(R.id.buttonLogin)).perform(click())
+        runBlocking{ delay(5000) }
+        onView(withText("CASE ID #")).check(matches(isDisplayed()))
 
         /**
          * go to case history
          */
         onView(withId(R.id.buttonViewHistory)).perform(click())
-        runBlocking{ delay(1000) }
-
-        
-
     }
 
     @Test
@@ -85,8 +145,8 @@ class LoginActivityTest {
         onView(withId(R.id.editTextPassword)).perform(typeText("00000000"))
         onView(withId(R.id.editTextUsername)).perform(closeSoftKeyboard());
         onView(withId(R.id.buttonLogin)).perform(click())
-        runBlocking{ delay(5000) }
-        onView(withText("CASE ID #")).check(matches(isDisplayed()))
+        runBlocking{ delay(500) }
+
     }
 }
 
